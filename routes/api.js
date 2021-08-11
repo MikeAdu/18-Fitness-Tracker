@@ -1,11 +1,11 @@
 const router =require ("express").Router()
+const db =required("../models")
 
 
 
 
-
-app.get("/notes", (req, res) => {
-    db.Note.find({})
+router.get("/", (req, res) => {
+    db.Workout.find({})
       .then((dbNote) => {
         res.json(dbNote);
       })
@@ -14,15 +14,7 @@ app.get("/notes", (req, res) => {
       });
   });
   
-  app.get("/user", (req, res) => {
-    db.User.find({})
-      .then((dbUser) => {
-        res.json(dbUser);
-      })
-      .catch((err) => {
-        res.json(err);
-      });
-  });
+
   
   app.post("/submit", ({ body }, res) => {
     db.Note.create(body)
