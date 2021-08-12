@@ -6,8 +6,8 @@ const db =required("../models")
 
 router.get("/", (req, res) => {
     db.Workout.find({})
-      .then((dbNote) => {
-        res.json(dbNote);
+      .then((dbWorkout) => {
+        res.json(dbWorkout);
       })
       .catch((err) => {
         res.json(err);
@@ -16,22 +16,22 @@ router.get("/", (req, res) => {
   
 
   
-  app.post("/submit", ({ body }, res) => {
+  router.post("/", ({ body }, res) => {
     db.Note.create(body)
       .then(({ _id }) =>
-        db.User.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true })
+        db.Workout.findOneAndUpdate({}, { $push: { Workout: _id } }, { new: true })
       )
-      .then((dbUser) => {
-        res.json(dbUser);
+      .then((dbWorkout) => {
+        res.json(dbWorkout);
       })
       .catch((err) => {
         res.json(err);
       });
   });
   
-  app.get("/populateduser", (req, res) => {
+  router.get("/", (req, res) => {
     db.User.find({})
-      .populate("notes")
+      .populate("workout")
       .then((dbUser) => {
         res.json(dbUser);
       })
